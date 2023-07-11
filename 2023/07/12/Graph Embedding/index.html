@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Graph EmbeddingIntroductionGraph embedding aims to map each node in a given graph into a low dimensional vector representation.  Graph Embedding for Simple GraphsGraph embedding algorithms for simple">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Graph Neural Networks -- Graph Embedding">
+<meta property="og:url" content="https://fredfang1216.github.io/2023/07/12/Graph%20Embedding/index.html">
+<meta property="og:site_name" content="FredFang&#39;s Blog">
+<meta property="og:description" content="Graph EmbeddingIntroductionGraph embedding aims to map each node in a given graph into a low dimensional vector representation.  Graph Embedding for Simple GraphsGraph embedding algorithms for simple">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://fredfang1216.github.io/2023/07/12/Graph%20Embedding/1.png">
+<meta property="article:published_time" content="2023-07-11T22:16:08.000Z">
+<meta property="article:modified_time" content="2023-07-11T23:04:37.377Z">
+<meta property="article:author" content="Lei Fang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://fredfang1216.github.io/2023/07/12/Graph%20Embedding/1.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Graph Neural Networks -- Graph Embedding</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/02/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E8%B7%AF%E7%BA%BF%E5%9B%BE/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://fredfang1216.github.io/2023/07/12/Graph%20Embedding/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://fredfang1216.github.io/2023/07/12/Graph%20Embedding/&text=Graph Neural Networks -- Graph Embedding"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://fredfang1216.github.io/2023/07/12/Graph%20Embedding/&title=Graph Neural Networks -- Graph Embedding"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://fredfang1216.github.io/2023/07/12/Graph%20Embedding/&is_video=false&description=Graph Neural Networks -- Graph Embedding"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Graph Neural Networks -- Graph Embedding&body=Check out this article: https://fredfang1216.github.io/2023/07/12/Graph%20Embedding/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://fredfang1216.github.io/2023/07/12/Graph%20Embedding/&title=Graph Neural Networks -- Graph Embedding"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://fredfang1216.github.io/2023/07/12/Graph%20Embedding/&title=Graph Neural Networks -- Graph Embedding"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://fredfang1216.github.io/2023/07/12/Graph%20Embedding/&title=Graph Neural Networks -- Graph Embedding"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://fredfang1216.github.io/2023/07/12/Graph%20Embedding/&title=Graph Neural Networks -- Graph Embedding"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://fredfang1216.github.io/2023/07/12/Graph%20Embedding/&name=Graph Neural Networks -- Graph Embedding&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://fredfang1216.github.io/2023/07/12/Graph%20Embedding/&t=Graph Neural Networks -- Graph Embedding"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Graph-Embedding"><span class="toc-number">1.</span> <span class="toc-text">Graph Embedding</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Graph-Embedding-for-Simple-Graphs"><span class="toc-number">1.2.</span> <span class="toc-text">Graph Embedding for Simple Graphs</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Preserving-Node-Co-occurrence"><span class="toc-number">1.2.1.</span> <span class="toc-text">Preserving Node Co-occurrence</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Mapping-Function"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">Mapping Function</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Random-Walk%E2%80%93Based-Co-occurrence-Extractor"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">Random Walk–Based Co-occurrence Extractor</span></a></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Graph Neural Networks -- Graph Embedding
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Lei Fang</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-07-11T22:16:08.000Z" class="dt-published" itemprop="datePublished">2023-07-12</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="Graph-Embedding"><a href="#Graph-Embedding" class="headerlink" title="Graph Embedding"></a>Graph Embedding</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p><strong>Graph embedding aims to map each node in a given graph into a low dimensional vector representation.</strong></p>
+<p><img src="/2023/07/12/Graph%20Embedding/1.png" alt></p>
+<h2 id="Graph-Embedding-for-Simple-Graphs"><a href="#Graph-Embedding-for-Simple-Graphs" class="headerlink" title="Graph Embedding for Simple Graphs"></a>Graph Embedding for Simple Graphs</h2><p>Graph embedding algorithms for simple graphs that are static, undirected, unsigned, and homogeneous.</p>
+<h3 id="Preserving-Node-Co-occurrence"><a href="#Preserving-Node-Co-occurrence" class="headerlink" title="Preserving Node Co-occurrence"></a>Preserving Node Co-occurrence</h3><p>One of the most popular ways to extract node co-occurrence in a graph is via performing <strong>random walks</strong>. ==Nodes are considered similar to each other if they tend to co-occur in these random walks.== The mapping function is optimized so that the learned node representations can reconstruct the “similarity” extracted from random walks.</p>
+<p>Representative network embedding algorithms preserving node co-occurrence are DeepWalk (Perozzi et al., 2014) and node2vec (Grover and Leskovec, 2016) and LINE (Tang et al., 2015).</p>
+<h4 id="Mapping-Function"><a href="#Mapping-Function" class="headerlink" title="Mapping Function"></a>Mapping Function</h4><p>A direct way to define the mapping function $f\left(v_i\right)$ is using a lookup table. This means that we retrieve node $v_i$ ‘s embedding $\mathbf{u}_i$ given its index $i$. Specifically, the mapping function is implemented as</p>
+<script type="math/tex; mode=display">
+f\left(v_i\right)=\mathbf{u}_i=\mathbf{e}_i^{\top} \mathbf{W},</script><p>where $\mathbf{e}_i \in\{0,1\}^N$ with $N=|\mathcal{V}|$ is the one-hot encoding of the node $v_i$. In particular, $\mathbf{e}_i$ contains a single element $\mathbf{e}_i[i]=1$ and all other elements are 0 . $\mathbf{W}^{N \times d}$ are the embedding parameters to be learned, where $d$ is the dimension of the embedding. The $i$ th row of the matrix $\mathbf{W}$ denotes the representation (or the embedding) of node $v_i$. Hence, the number of parameters in the mapping function is $N \times d$.</p>
+<h4 id="Random-Walk–Based-Co-occurrence-Extractor"><a href="#Random-Walk–Based-Co-occurrence-Extractor" class="headerlink" title="Random Walk–Based Co-occurrence Extractor"></a>Random Walk–Based Co-occurrence Extractor</h4><p>Given a starting node $v^{(0)}$ in a graph $\mathcal{G}$, we randomly walk to one of its neighbors. We repeat this process from the node until $T$ nodes are visited. This random sequence of visited nodes is a random walk of length $T$ on the graph. We formally define a random walk as follows.</p>
+<p><strong>Definition (Random Walk):</strong> Let $\mathcal{G}=\{\mathcal{V}, \mathcal{E}\}$ denote a connected graph. We now consider a random walk starting at node $v^{(0)} \in \mathcal{V}$ on the graph $G$. Assume that at the $t$-th step of the random walk, we are at node $v^{(t)}$ and then we proceed with the random walk by choosing the next node according to the following probability:</p>
+<script type="math/tex; mode=display">
+p\left(v^{(t+1)} \mid v^{(t)}\right)= \begin{cases}\frac{1}{d\left(v^{(t)}\right)}, & \text { if } v^{(t+1)} \in \mathcal{N}\left(v^{(t)}\right) \\ 0, & \text { otherwise, }\end{cases} \notag</script><p>where $d\left(v^{(t)}\right)$ denotes the degree of node $v^{(t)}$ and $\mathcal{N}\left(v^{(t)}\right)$ is the set of neighbors of $v^{(t)}$. In other words, the next node is randomly selected from the neighbors of the current node following a uniform distribution.</p>
+<p>We use a random walk generator to summarize the above process as follows:</p>
+<script type="math/tex; mode=display">
+\mathcal{W}=\operatorname{RW}\left(\mathcal{G}, v^{(0)}, T\right) \notag</script><p>where $\mathcal{W}=\left(v^{(0)}, \ldots, v^{(T-1)}\right)$ denotes the generated random walk, where $v^{(0)}$ is the starting node and $T$ is the length of the random walk.</p>
+<p>In DeepWalk, a set of short random walks is generated from a given graph, and node co-occurrence is extracted from these random walks.</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+& \hline \text { Algorithm 1: Generating Random Walks } \\
+& \hline \mathbf{1} \text { Input: } \mathcal{G}=\{\mathcal{V}, \mathcal{E}\}, T, \gamma \\
+& 2 \text { Output: } \mathcal{R} \\
+& 3 \text { Initialization: } \mathcal{R} \leftarrow \emptyset \\
+& 4 \text { for } i \text { in range }(1, \gamma) \mathbf{d o} \\
+& \mathbf{5} \mid \text { for } v \in \mathcal{V} \text { do } \\
+& 6 \\
+& 7 \quad \mid \mathcal{W} \leftarrow R W\left(\mathcal{G}, v^{(0)}, T\right) \\
+& 8 \quad \mathcal{R} \leftarrow \mathcal{R} \cup\{\mathcal{W}\} \\
+& 8 \quad \text { end } \\
+& 9 \text { end }
+\end{aligned} \notag</script><p>These random walks can be treated as sentences in an “artifificial language” where the set of nodes V is its vocabulary. The Skip-gram algorithm (Mikolov et al., 2013) in language modeling tries to preserve the information in sentences by capturing the co-occurrence relations between words in these sentences.</p>
+<p>For a given center word in a sentence, those words within a certain distance <em>w</em> away from the center word are treated as its “context.” Then the center word is considered to co-occur with all words in its context.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Graph-Embedding"><span class="toc-number">1.</span> <span class="toc-text">Graph Embedding</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Graph-Embedding-for-Simple-Graphs"><span class="toc-number">1.2.</span> <span class="toc-text">Graph Embedding for Simple Graphs</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Preserving-Node-Co-occurrence"><span class="toc-number">1.2.1.</span> <span class="toc-text">Preserving Node Co-occurrence</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Mapping-Function"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">Mapping Function</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Random-Walk%E2%80%93Based-Co-occurrence-Extractor"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">Random Walk–Based Co-occurrence Extractor</span></a></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://fredfang1216.github.io/2023/07/12/Graph%20Embedding/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://fredfang1216.github.io/2023/07/12/Graph%20Embedding/&text=Graph Neural Networks -- Graph Embedding"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://fredfang1216.github.io/2023/07/12/Graph%20Embedding/&title=Graph Neural Networks -- Graph Embedding"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://fredfang1216.github.io/2023/07/12/Graph%20Embedding/&is_video=false&description=Graph Neural Networks -- Graph Embedding"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Graph Neural Networks -- Graph Embedding&body=Check out this article: https://fredfang1216.github.io/2023/07/12/Graph%20Embedding/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://fredfang1216.github.io/2023/07/12/Graph%20Embedding/&title=Graph Neural Networks -- Graph Embedding"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://fredfang1216.github.io/2023/07/12/Graph%20Embedding/&title=Graph Neural Networks -- Graph Embedding"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://fredfang1216.github.io/2023/07/12/Graph%20Embedding/&title=Graph Neural Networks -- Graph Embedding"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://fredfang1216.github.io/2023/07/12/Graph%20Embedding/&title=Graph Neural Networks -- Graph Embedding"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://fredfang1216.github.io/2023/07/12/Graph%20Embedding/&name=Graph Neural Networks -- Graph Embedding&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://fredfang1216.github.io/2023/07/12/Graph%20Embedding/&t=Graph Neural Networks -- Graph Embedding"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    Lei Fang
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+</body>
+</html>
