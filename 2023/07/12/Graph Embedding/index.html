@@ -15,7 +15,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://fredfang1216.github.io/2023/07/12/Graph%20Embedding/1.png">
 <meta property="article:published_time" content="2023-07-11T22:16:08.000Z">
-<meta property="article:modified_time" content="2023-07-11T23:04:37.377Z">
+<meta property="article:modified_time" content="2023-07-12T03:01:41.507Z">
 <meta property="article:author" content="Lei Fang">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://fredfang1216.github.io/2023/07/12/Graph%20Embedding/1.png">
@@ -76,13 +76,15 @@
      --><!--
        --><li><a href="/archives/">Writing</a></li><!--
      --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/FredFang1216">Projects</a></li><!--
      -->
       </ul>
     </span>
     <br/>
     <span id="actions">
       <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/07/31/Weekly%20Report/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" aria-label="Next post" href="/2023/02/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E8%B7%AF%E7%BA%BF%E5%9B%BE/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
@@ -115,7 +117,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Graph-Embedding"><span class="toc-number">1.</span> <span class="toc-text">Graph Embedding</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Graph-Embedding-for-Simple-Graphs"><span class="toc-number">1.2.</span> <span class="toc-text">Graph Embedding for Simple Graphs</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Preserving-Node-Co-occurrence"><span class="toc-number">1.2.1.</span> <span class="toc-text">Preserving Node Co-occurrence</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Mapping-Function"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">Mapping Function</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Random-Walk%E2%80%93Based-Co-occurrence-Extractor"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">Random Walk–Based Co-occurrence Extractor</span></a></li></ol></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Graph-Embedding"><span class="toc-number">1.</span> <span class="toc-text">Graph Embedding</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Graph-Embedding-for-Simple-Graphs"><span class="toc-number">1.2.</span> <span class="toc-text">Graph Embedding for Simple Graphs</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Preserving-Node-Co-occurrence"><span class="toc-number">1.2.1.</span> <span class="toc-text">Preserving Node Co-occurrence</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Mapping-Function"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">Mapping Function</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Random-Walk%E2%80%93Based-Co-occurrence-Extractor"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">Random Walk–Based Co-occurrence Extractor</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reconstructor-and-Objective"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">Reconstructor and Objective</span></a></li></ol></li></ol></li></ol></li></ol>
       </div>
     
   </span>
@@ -158,7 +160,7 @@
     <h1 id="Graph-Embedding"><a href="#Graph-Embedding" class="headerlink" title="Graph Embedding"></a>Graph Embedding</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p><strong>Graph embedding aims to map each node in a given graph into a low dimensional vector representation.</strong></p>
 <p><img src="/2023/07/12/Graph%20Embedding/1.png" alt></p>
 <h2 id="Graph-Embedding-for-Simple-Graphs"><a href="#Graph-Embedding-for-Simple-Graphs" class="headerlink" title="Graph Embedding for Simple Graphs"></a>Graph Embedding for Simple Graphs</h2><p>Graph embedding algorithms for simple graphs that are static, undirected, unsigned, and homogeneous.</p>
-<h3 id="Preserving-Node-Co-occurrence"><a href="#Preserving-Node-Co-occurrence" class="headerlink" title="Preserving Node Co-occurrence"></a>Preserving Node Co-occurrence</h3><p>One of the most popular ways to extract node co-occurrence in a graph is via performing <strong>random walks</strong>. ==Nodes are considered similar to each other if they tend to co-occur in these random walks.== The mapping function is optimized so that the learned node representations can reconstruct the “similarity” extracted from random walks.</p>
+<h3 id="Preserving-Node-Co-occurrence"><a href="#Preserving-Node-Co-occurrence" class="headerlink" title="Preserving Node Co-occurrence"></a>Preserving Node Co-occurrence</h3><p>One of the most popular ways to extract node co-occurrence in a graph is via performing <strong>random walks</strong>. Nodes are considered similar to each other if they tend to co-occur in these random walks. The mapping function is optimized so that the learned node representations can reconstruct the “similarity” extracted from random walks.</p>
 <p>Representative network embedding algorithms preserving node co-occurrence are DeepWalk (Perozzi et al., 2014) and node2vec (Grover and Leskovec, 2016) and LINE (Tang et al., 2015).</p>
 <h4 id="Mapping-Function"><a href="#Mapping-Function" class="headerlink" title="Mapping Function"></a>Mapping Function</h4><p>A direct way to define the mapping function $f\left(v_i\right)$ is using a lookup table. This means that we retrieve node $v_i$ ‘s embedding $\mathbf{u}_i$ given its index $i$. Specifically, the mapping function is implemented as</p>
 <script type="math/tex; mode=display">
@@ -186,7 +188,21 @@ p\left(v^{(t+1)} \mid v^{(t)}\right)= \begin{cases}\frac{1}{d\left(v^{(t)}\right
 & 9 \text { end }
 \end{aligned} \notag</script><p>These random walks can be treated as sentences in an “artifificial language” where the set of nodes V is its vocabulary. The Skip-gram algorithm (Mikolov et al., 2013) in language modeling tries to preserve the information in sentences by capturing the co-occurrence relations between words in these sentences.</p>
 <p>For a given center word in a sentence, those words within a certain distance <em>w</em> away from the center word are treated as its “context.” Then the center word is considered to co-occur with all words in its context.</p>
-
+<script type="math/tex; mode=display">
+\begin{aligned}
+& \hline \text { Algorithm 2: Extracting Co-occurrence } \\
+& \hline 1 \text { Input: } \mathcal{R}, w \\
+& 2 \text { Output: } I \\
+& 3 \text { Initialization: } \mathcal{I} \leftarrow[~] \\
+& 4 \text { for } \mathcal{W} \text { in } \mathcal{R} \text { do } \\
+& 5 \mid \text { for } v^{(i)} \in \mathcal{W} \text { do } \\
+& 6 \quad \quad \text{for}~ j ~ in ~range(1,w)~\mathbf{do}\\
+& 7 \quad \quad \quad I.append(v^{(i-j)},v^{(i)})\\
+& 8 \quad \quad \quad I.append(v^{(i+j)},v^{(i)})\\
+& 9 \quad \quad end \\
+& 10\quad end\\
+& 11 \text { end }
+\end{aligned} \notag</script><h4 id="Reconstructor-and-Objective"><a href="#Reconstructor-and-Objective" class="headerlink" title="Reconstructor and Objective"></a>Reconstructor and Objective</h4>
   </div>
 </article>
 
@@ -207,7 +223,7 @@ p\left(v^{(t+1)} \mid v^{(t)}\right)= \begin{cases}\frac{1}{d\left(v^{(t)}\right
         
           <li><a href="/archives/">Writing</a></li>
         
-          <li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/FredFang1216">Projects</a></li>
         
       </ul>
     </div>
@@ -215,7 +231,7 @@ p\left(v^{(t+1)} \mid v^{(t)}\right)= \begin{cases}\frac{1}{d\left(v^{(t)}\right
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Graph-Embedding"><span class="toc-number">1.</span> <span class="toc-text">Graph Embedding</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Graph-Embedding-for-Simple-Graphs"><span class="toc-number">1.2.</span> <span class="toc-text">Graph Embedding for Simple Graphs</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Preserving-Node-Co-occurrence"><span class="toc-number">1.2.1.</span> <span class="toc-text">Preserving Node Co-occurrence</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Mapping-Function"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">Mapping Function</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Random-Walk%E2%80%93Based-Co-occurrence-Extractor"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">Random Walk–Based Co-occurrence Extractor</span></a></li></ol></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Graph-Embedding"><span class="toc-number">1.</span> <span class="toc-text">Graph Embedding</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Graph-Embedding-for-Simple-Graphs"><span class="toc-number">1.2.</span> <span class="toc-text">Graph Embedding for Simple Graphs</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Preserving-Node-Co-occurrence"><span class="toc-number">1.2.1.</span> <span class="toc-text">Preserving Node Co-occurrence</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Mapping-Function"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">Mapping Function</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Random-Walk%E2%80%93Based-Co-occurrence-Extractor"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">Random Walk–Based Co-occurrence Extractor</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reconstructor-and-Objective"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">Reconstructor and Objective</span></a></li></ol></li></ol></li></ol></li></ol>
       </div>
     
 
@@ -269,7 +285,7 @@ p\left(v^{(t+1)} \mid v^{(t)}\right)= \begin{cases}\frac{1}{d\left(v^{(t)}\right
      --><!--
        --><li><a href="/archives/">Writing</a></li><!--
      --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/FredFang1216">Projects</a></li><!--
      -->
       </ul>
     </nav>
